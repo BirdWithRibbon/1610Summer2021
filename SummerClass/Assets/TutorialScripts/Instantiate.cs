@@ -5,8 +5,6 @@ public class UsingInstantiate : MonoBehaviour
 {
     public Rigidbody rocketPrefab;
     public Transform barrelEnd;
-}
-
 
     void Update()
     {
@@ -17,3 +15,4 @@ public class UsingInstantiate : MonoBehaviour
             rocketInstance.AddForce(barrelEnd.forward * 5000);
         }
     }
+}

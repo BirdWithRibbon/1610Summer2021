@@ -4,9 +4,7 @@ using System.Collections;
 public class DualAxisExample : MonoBehaviour
 {
     public float range;
-    public GUIText textOutput;
-}
-
+    public UnityEngine.UI.Text textOutput;
     void Update()
     {
         float h = Input.GetAxis("Horizontal");
@@ -17,3 +15,4 @@ public class DualAxisExample : MonoBehaviour
         transform.position = new Vector3(xPos, yPos, 0);
         textOutput.text = "Horizontal Value Returned: " + h.ToString("F2") + "\nVertical Value Returned: " + v.ToString("F2");
     }
+}

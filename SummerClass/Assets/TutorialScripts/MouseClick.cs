@@ -5,7 +5,7 @@ public class MouseClick : MonoBehaviour
 {
     void OnMouseDown()
     {
-        rigidbody.AddForce(-transform.forward * 500f);
-        rigidbody.useGravity = true;
+        GetComponent<Rigidbody>().AddForce(-transform.forward * 500f);
+        GetComponent<Rigidbody>().useGravity = true;
     }
 }

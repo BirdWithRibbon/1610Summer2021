@@ -3,7 +3,7 @@ using System.Collections;
 
 public class KeyInput : MonoBehaviour
 {
-    public GUITexture graphic;
+    public UnityEngine.UI.Image graphic;
     public Texture2D standard;
     public Texture2D downgfx;
     public Texture2D upgfx;
@@ -37,6 +37,6 @@ public class KeyInput : MonoBehaviour
             graphic.texture = standard;
         }
 
-        guiText.text = " " + down + "\n " + held + "\n " + up;
+        UnityEngine.UI.Text = " " + down + "\n " + held + "\n " + up;
     }
 }

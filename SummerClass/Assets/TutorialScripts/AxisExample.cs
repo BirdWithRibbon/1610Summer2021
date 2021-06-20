@@ -4,7 +4,7 @@ using System.Collections;
 public class AxisExample : MonoBehaviour
 {
     public float range;
-    public GUIText textOutput;
+    public UnityEngine.UI.Text textOutput;
 
 
     void Update()

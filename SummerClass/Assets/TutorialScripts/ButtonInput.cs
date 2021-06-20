@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ButtonInput : MonoBehaviour
 {
-    public GUITexture graphic;
+    public UnityEngine.UI.Image graphic;
     public Texture2D standard;
     public Texture2D downgfx;
     public Texture2D upgfx;
