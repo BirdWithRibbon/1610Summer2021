@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody playerRb;
+    //Player Values
     public float jumpForce;
     public float gravityModifier;
     public bool isOnGround = true;
     public bool gameOver = false;
+    //Ref Components
+    private Rigidbody playerRb;
     private Animator playerAnim;
+    //Audio and Particle Definitions
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
     public AudioClip jumpSound;
@@ -19,8 +22,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerRb = GetComponent<Rigidbody>();
+        //Init Stuff
         Physics.gravity *= gravityModifier;
+        playerRb = GetComponent<Rigidbody>();
         playerAnim = GetComponent<Animator>();
         playerAudio = GetComponent<AudioSource>();
     }
@@ -28,6 +32,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Jump if on ground and not dead.
         if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver) 
         { 
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -39,12 +44,14 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        //Kick up particles if able.
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
             dirtParticle.Play();
         } else if (collision.gameObject.CompareTag("Obstacle"))
         {
+            //Kill everything.
             gameOver = true;
             Debug.Log("Game Over!");
             playerAnim.SetBool("Death_b", true);
