@@ -122,10 +122,13 @@ public class PlayerController : MonoBehaviour
             isOnGround = true;
         }
     }
-    
-    //When leaving a shelf
+
+    //When leaving shelf
     void OnCollisionExit(Collision collision)
     {
-        isOnGround = false;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = false;
+        }
     }
 }
