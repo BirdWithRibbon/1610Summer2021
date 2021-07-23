@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 28.0f;
     public float horizontalSpeed = 12.0f;
     public float gravMod = 4.0f;
-    public float airControl = 1.0f; //Falling behavior does not work so does not alter.
     public bool isOnGround = false;
     public bool isFalling = true;
+    public float fallTime = 1.0f;
 
     //These are inputs
     private float horizontalInput;
@@ -46,16 +46,8 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         jumpInput = Input.GetAxis("Jump");
 
-        //Move direction based on aircontrol. Uses worldspace.
-        if (isFalling)
-        {
-            transform.Translate(horizontalInput * Time.deltaTime * horizontalSpeed, 0, 0, Space.World);
-        }
-        else
-        {
-            transform.Translate(horizontalInput * Time.deltaTime * horizontalSpeed * airControl, 0, 0, Space.World);
-        }
-        
+        //Move
+        playerRb.velocity = new Vector3(horizontalInput * 20, playerRb.velocity.y, 0);
         
         //Rotate object based on Input
         if (horizontalInput != 0)
@@ -73,6 +65,9 @@ public class PlayerController : MonoBehaviour
         //Jump if on ground
         if (jumpInput != 0 && isOnGround)
         {
+            //Destroy downward momentum.
+            playerRb.velocity = new Vector3(playerRb.velocity.x, 0, 0);
+            //Add force!
             playerRb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
             isOnGround = false;
             //playerAnim.SetTrigger("Jump_trig");
@@ -83,24 +78,23 @@ public class PlayerController : MonoBehaviour
         //Jump through platforms the lazy way.
         if (playerRb.velocity.y > 0)
         {
-            playerRb.detectCollisions = false;
+            Physics.IgnoreLayerCollision(6, 7, true);
+            Physics.IgnoreLayerCollision(6, 10, true);
         }
         else
         {
-            playerRb.detectCollisions = true;
+            Physics.IgnoreLayerCollision(6, 7, false);
+            Physics.IgnoreLayerCollision(6, 10, false);
         }
+
 
         //Wrapping around stage behavior
         if (currentPosition.x > stageSideLimit)
         {
-            //Vector3 temp = new Vector3(stageSideLimit * 2 - 1, 0, 0);
-            //transform.position -= temp;
             transform.position = new Vector3(-stageSideLimit + 2, currentPosition.y, currentPosition.z);
         }
         else if (currentPosition.x < -stageSideLimit)
         {
-            //Vector3 temp = new Vector3(stageSideLimit * 2 - 1, 0, 0);
-            //transform.position += temp;
             transform.position = new Vector3(stageSideLimit - 2, currentPosition.y, currentPosition.z);
         }
 
@@ -116,10 +110,16 @@ public class PlayerController : MonoBehaviour
     //Colliding with objects!
     private void OnCollisionEnter(Collision collision)
     {
-        //Check to see if player is on ground. Currently causes issues when hitting from below or when colliding with the side of a ground object.
+        //Check to see if player is on ground.
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
+        }
+
+        //Is this Money?
+        if (collision.gameObject.CompareTag("MoneyBag"))
+        {
+            Destroy(collision.gameObject);
         }
     }
 
