@@ -116,6 +116,10 @@ public class GameManager : MonoBehaviour
             gameOverText.gameObject.SetActive(false);
             finalscoreText.text = "";
             titleScreen.SetActive(true);
+            for (int i = 0; i < shelfList.Count; i++)
+            {
+                shelfList[i].GetComponent<Shelf>().Respawn();
+            }
         }
     }
 

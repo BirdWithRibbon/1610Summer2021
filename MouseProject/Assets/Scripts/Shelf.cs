@@ -154,7 +154,7 @@ public class Shelf : MonoBehaviour
         validSpawn.SetActive(false);
     }
 
-    void Respawn()
+    public void Respawn()
     {
         //currentBags.Clear();
         currentRespawn = 0;
