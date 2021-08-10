@@ -8,6 +8,7 @@ TagManager:
   - MoneyBag
   - New tag
   - Mouse
+  - ValidSpawn
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - UI
   - Game
   - Junk
-  - 
-  - 
+  - Valid
+  - Spaggeheo
   - 
   - 
   - 

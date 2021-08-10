@@ -8,7 +8,7 @@ public class ItemPickup : MonoBehaviour
     public float curFloor;
     private float priorFloor;
 
-    private GameObject gameManager;
+    public GameManager gameManager;
 
     private Vector3 curPosition;
     private Vector3 heightOffset = new Vector3(0.0f, 0.2f, 0.0f);
@@ -31,7 +31,7 @@ public class ItemPickup : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.Find("Game Manager");
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         bagAnimator = GetComponent<Animator>();
         bagAudio = GetComponent<AudioSource>();
         curPosition = transform.position;
@@ -92,6 +92,11 @@ public class ItemPickup : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (!gameManager.gameRunning)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     //RayCaster
@@ -122,6 +127,7 @@ public class ItemPickup : MonoBehaviour
         bagAudio.Play();
         bagMesh.enabled = false;
         partSys.Play();
+        gameManager.IncreaseScore();
         //WaitForSeconds(2);
         //Destroy(gameObject);
         //Destroy(gameManager);

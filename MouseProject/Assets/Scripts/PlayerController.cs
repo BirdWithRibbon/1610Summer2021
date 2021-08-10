@@ -39,8 +39,11 @@ public class PlayerController : MonoBehaviour
     private BoxCollider playerCol;
     private ParticleSystem playerPart;
 
+    public GameManager gameManager;
+
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         playerAnim = GetComponent<Animator>();
         playerCol = GetComponent<BoxCollider>();
         playerPart = GetComponent<ParticleSystem>();
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        
         //Get Input
         horizontalInput = Input.GetAxis("Horizontal");
         jumpInput = Input.GetAxis("Jump");
@@ -134,6 +138,7 @@ public class PlayerController : MonoBehaviour
         if (transform.position.y < stageBottom)
         {
             transform.position = Vector3.zero;
+            gameManager.LoseLife();
             curHoriSpeed = 0;
             curVertSpeed = 0;
         }
@@ -149,6 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         RaycastHit rayHit;
         LayerMask layerMask = LayerMask.GetMask("Game");
+        //layerMask |= (1 << LayerMask.NameToLayer("Filth"));
         if (Physics.Raycast(curPosition + heightOffset, Vector3.down, out rayHit, 2000, layerMask))
         {
             curFloor = Mathf.Round(rayHit.point.y*1000) * 0.001f;

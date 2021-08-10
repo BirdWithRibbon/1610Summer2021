@@ -13,6 +13,7 @@ public class Shelf : MonoBehaviour
     private GameObject debris2;
     private GameObject debris3;
     private GameObject debris4;
+    private GameObject validSpawn;
 
     //Others
     private ParticleSystem debrisParticles;
@@ -70,6 +71,10 @@ public class Shelf : MonoBehaviour
             {
                 debris4 = child.gameObject;
             }
+            else if (child.gameObject.name == "validSpawn")
+            {
+                validSpawn = child.gameObject;
+            }
         }
         mainDestroyed.SetActive(false);
         bracket1.gameObject.GetComponent<BoxCollider>().enabled = false;
@@ -117,6 +122,7 @@ public class Shelf : MonoBehaviour
             {
                 //currentBags.Clear(); //Clear list and die.
                 currentDeath = 0;
+                Debug.Log(currentBags.Count);
                 Death();
             }
             else
@@ -145,6 +151,7 @@ public class Shelf : MonoBehaviour
         //debris2.SetActive(true);
         bracket1.gameObject.GetComponent<BoxCollider>().enabled = true;
         bracket2.gameObject.GetComponent<BoxCollider>().enabled = true;
+        validSpawn.SetActive(false);
     }
 
     void Respawn()
@@ -156,6 +163,7 @@ public class Shelf : MonoBehaviour
         mainDestroyed.SetActive(false);
         bracket1.gameObject.GetComponent<BoxCollider>().enabled = false;
         bracket2.gameObject.GetComponent<BoxCollider>().enabled = false;
+        validSpawn.SetActive(true);
     }
 
     private void OnCollisionEnter(Collision collision)
